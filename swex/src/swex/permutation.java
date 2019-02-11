@@ -18,8 +18,9 @@ public class permutation {
 //		powersetSum(arr, 0, selected, arr2);
 
 		// 모든 경우의 수
-		perm(arr, 0, arr.length, arr.length);
-		perm2(arr, 0, arr.length);
+//		perm(arr, 0, arr.length, arr.length);
+//		perm2(arr, 0, arr.length);
+		perm3(arr,0);
 	}
 
 	// n개중에 r개 선택하기!
