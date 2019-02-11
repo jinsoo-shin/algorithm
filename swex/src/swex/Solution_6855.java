@@ -46,7 +46,7 @@ public class Solution_6855 {
 			for (int i = 0; i < N; i++) {
 				arr[i] = Integer.parseInt(st.nextToken());
 			}
-			System.out.println(Arrays.toString(arr));
+//			System.out.println(Arrays.toString(arr));
 			if (N <= K) {
 				answer = 0;
 			} else {
@@ -61,27 +61,27 @@ public class Solution_6855 {
 	// k는 발전소..쪼갠거
 	static void re(int start, int end, int k, int sum) {
 		if (sum > min) {
-			System.out.println();
+//			System.out.println();
 			return;
 		}
 		if (k == K - 1) {// 끝인 경우
 			end = arr.length - 1;
 			sum += arr[end] - arr[start];
 			if (sum > min) {
-				System.out.println();
+//				System.out.println();
 				return;
 			}
-			System.out.print(start + ":" + end + " / " + min+" ");
+//			System.out.print(start + ":" + end + " / " + min+" ");
 			min=Math.min(sum, min);
 //			min = min > sum ? sum : min;
-			System.out.println(min);
+//			System.out.println(min);
 			return;
 		}
 		if (k < K && (end >= arr.length - 1 || start >= arr.length-1)) { // 작은데
-			System.out.println();
+//			System.out.println();
 			return;
 		} // 탈출 조건
-		System.out.print(start + ":" + end + " / ");
+//		System.out.print(start + ":" + end + " / ");
 		// 더한것
 		re(end + 1, end + 2, k + 1, sum + (arr[end] - arr[start]));
 		// 안더한것
