@@ -24,7 +24,7 @@ public class Solution_6913 {
 			int N = Integer.parseInt(st.nextToken());
 			int M = Integer.parseInt(st.nextToken());
 
-			int[] cnt = new int[M]; // 여기에 i번째사람이 푼거 갯수세서 넣기
+			int[] cnt = new int[N]; // 여기에 i번째사람이 푼거 갯수세서 넣기
 			for (int i = 0; i < N; i++) {
 				String[] tmp = br.readLine().split(" ");
 				int tmpcnt = 0;
@@ -39,10 +39,12 @@ public class Solution_6913 {
 			System.out.println(Arrays.toString(cnt));
 			Arrays.sort(cnt);
 			int ans1 = cnt[cnt.length - 1];// 1등이 푼 문제의 수
-			int ans2 = 1;
-			for (int i = 0; i < cnt.length - 1; i++) {
+			int ans2 = 0;
+			for (int i = cnt.length-1; i >=0; i--) {
 				if (cnt[i] == ans1) {
 					ans2++;
+				}else {
+					break;
 				}
 			}
 			System.out.println("#" + tc + " " + ans2 + " " + ans1);
