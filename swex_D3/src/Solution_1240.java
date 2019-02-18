@@ -318,7 +318,9 @@ public class Solution_1240 {
 			st = new StringTokenizer(br.readLine());
 			int N = Integer.parseInt(st.nextToken());
 			int M = Integer.parseInt(st.nextToken());
-
+			// 8개씩 쪼개서 숫자로 변환하고
+			// 검증코드가 맞다면 그 숫자를 다더하고
+			// 틀리면 0을 출력한다.ㄴㄴ
 			String[][] arr = new String[N][M];
 
 			int ans = 0;
