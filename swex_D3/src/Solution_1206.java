@@ -17,9 +17,23 @@ public class Solution_1206 {
 			int[] arr = new int[N];
 			for (int i = 0; i < N; i++) {
 				arr[i] = Integer.parseInt(st.nextToken());
-			}//받아왔다
-			
-			
+			} // 받아왔다
+			go: for (int i = 0; i < N; i++) {
+				int max = Integer.MIN_VALUE;
+				for (int j = i - 2; j < i + 3; j++) {
+					if (j < 0 || j >= N) {
+						continue go;
+					}
+					if (j != i) {
+						if (arr[i] < arr[j]) {
+							continue go;
+						}
+						max = Math.max(arr[j], max);
+					}
+				}
+				ans += arr[i] - max;
+			}
+
 			System.out.println("#" + tc + " " + ans);
 		}
 	}
