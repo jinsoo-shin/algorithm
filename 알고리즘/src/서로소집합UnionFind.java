@@ -3,7 +3,7 @@ import java.util.*;
 
 public class 서로소집합UnionFind {
 
-//
+//d
 //Disjoint-Set 서로소 집합
 //Union-Find 유니온 파인드 => 합집합 찾기
 //

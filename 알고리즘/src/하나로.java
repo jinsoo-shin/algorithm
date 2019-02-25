@@ -47,7 +47,7 @@ public class 하나로 {
 
 //				while (!pq.isEmpty()) {
 //					System.out.println(pq.poll());
-//				}
+//				}g
 
 			boolean[] visit = new boolean[N];
 			// 하나를 먼저 넣어놓는다.
