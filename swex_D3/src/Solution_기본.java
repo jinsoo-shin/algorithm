@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Solution_기본 {
 //	public class Solution {
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws Exception{
 //		System.setIn(new FileInputStream("res/input.txt"));
 //		InputStream input = Solution_기본.class.getResourceAsStream("jump.txt");
 		String src = "";
