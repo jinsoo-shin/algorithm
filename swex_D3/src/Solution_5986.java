@@ -15,7 +15,6 @@ public class Solution_5986 {
 			list.add(j);
 		}
 		for (int i = 2; i <= 33; i++) {
-
 			for (int k = 0; k < list.size(); k++) {
 				if (list.get(k) == i) {
 					continue;
@@ -46,7 +45,7 @@ public class Solution_5986 {
 				for (int j = i; j < findIdx; j++) {
 					for (int k = j; k < findIdx; k++) {
 						if (list.get(i) + list.get(j) + list.get(k) == N) {
-							System.out.println(list.get(i) + " "+list.get(j) + " "+list.get(k));
+							System.out.println(list.get(i) + " " + list.get(j) + " " + list.get(k));
 							ans++;
 						}
 					}
