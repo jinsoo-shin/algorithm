@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class Solution6485 {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		String src = "1\r\n" + "2\r\n" + "0.3 100\r\n" + "0.7 1";
+		String src = "1\r\n" + "2\r\n" + "1 3\r\n" + "2 5\r\n" + "5\r\n" + "1\r\n" + "2\r\n" + "3\r\n" + "4\r\n" + "5";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		br = new BufferedReader(new StringReader(src));
 		StringTokenizer st;
@@ -18,17 +18,27 @@ public class Solution6485 {
 		for (int tc = 1; tc <= T; tc++) {
 
 			int N = Integer.parseInt(br.readLine());
-//			double num[][] = new double[N][2];
-			double ans=0;
+			int[][] AB = new int[N][2];
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine(), " ");
-				ans+=Double.parseDouble(st.nextToken())*Double.parseDouble(st.nextToken());
-				System.out.println(ans);
-//				num[i][0] = Double.parseDouble(st.nextToken());
-//				num[i][1] = Double.parseDouble(st.nextToken());
+				AB[i][0] = Integer.parseInt(st.nextToken());
+				AB[i][1] = Integer.parseInt(st.nextToken());
 			}
 
-			System.out.println(String.format("#%d %.6f", tc,ans));
+			int P = Integer.parseInt(br.readLine());
+			StringBuilder sb = new StringBuilder();
+			sb.append("#" + tc);
+			for (int p = 0; p < P; p++) {
+				int ans = 0;
+				int bus = Integer.parseInt(br.readLine()); // Cj번 버스 정류장
+				for (int i = 0; i < AB.length; i++) {
+					if (bus >= AB[i][0] && bus <= AB[i][1]) {
+						ans++;
+					}
+				}
+				sb.append(" " + ans);
+			}
+			System.out.println(sb.toString());
 		}
 	}
 }
