@@ -27,9 +27,9 @@
 					map[x][y] = 1;
 					map[y][x] = 1;
 				}
-	//			for (int[] row : map) {
-	//				System.out.println(Arrays.toString(row));
-	//			}
+				for (int[] row : map) {
+					System.out.println(Arrays.toString(row));
+				}
 				for (int i = 0; i < N - 2; i++) {
 					for (int j = i + 1; j < N; j++) {
 						int cnt = 0;
@@ -52,7 +52,7 @@
 				if (map[startY][i] == 1) {
 					if (map[i][startX] == 1) {
 						ans++;
-	//					System.out.println(startX + " " + startY + " " + i);
+						System.out.println(startX + " " + startY + " " + i);
 					}
 				}
 			}
