@@ -1,8 +1,7 @@
 import java.io.*;
 import java.util.*;
-
-public class Main_포켓몬마스터1620 {
-	//나중에 이거 클래스만들어서 이름으로 소트하고 그걸로 이진탐색하고 걔 번호 출력하기
+//시간 뻥...
+public class Main_포켓몬마스터1620_2_리스트 {
 //	public class Main {
 	// https://www.acmicpc.net/problem/1620
 	public static void main(String[] args) throws Exception {
@@ -17,37 +16,21 @@ public class Main_포켓몬마스터1620 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int K = Integer.parseInt(st.nextToken());
-		dogam = new String[N];
+		List<String> dogam = new ArrayList<>();
 		for (int i = 0; i < N; i++) {
-			dogam[i] = br.readLine();
+			dogam.add(br.readLine());
 		}
-		sortDogam = dogam.clone();
-		Arrays.sort(sortDogam);
-		System.out.println(Arrays.toString(sortDogam));
-		String[] ans = new String[K];
+		System.out.println(dogam);
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < K; i++) {
-			ans[i] = br.readLine();
-		}
-		System.out.println(findName(0, N - 1, "Blastoise"));
-	}
-
-	static String[] dogam;//원본
-	static String[] sortDogam;//소트한것
-
-	static int findName(int start, int end, String find) {
-		int mid = (start + end) / 2;
-		if (start > end) {
-			return -1;
-		}
-		if (sortDogam[mid].equals(find)) {
-			return mid;
-		} else {
-			if (find.compareTo(sortDogam[mid]) < 0) {// find가 앞에있으면
-				return findName(start, mid - 1, find);
-			} else {// find가 뒤에있음!!
-				return findName(mid + 1, end, find);
+			String tmp = br.readLine();
+			if (Character.isDigit(tmp.charAt(0))) {
+				sb.append(dogam.get(Integer.parseInt(tmp)) + "\n");
+			} else {
+				sb.append((dogam.indexOf(tmp)+1) + "\n");
 			}
 		}
+		System.out.println(sb.toString());
 	}
 
 }
