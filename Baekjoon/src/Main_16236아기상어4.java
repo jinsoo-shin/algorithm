@@ -1,16 +1,24 @@
 import java.io.*;
 import java.util.*;
 
-public class Main_16236아기상어3 {
+public class Main_16236아기상어4 {
 //	public class Main {
 	public static void main(String[] args) throws Exception {
 //		String src = "3\r\n" + "0 0 1\r\n" + "0 0 0\r\n" + "0 9 0";
+		// 3
+//		String src = "6\r\n" + "6 0 6 0 6 1\r\n" + "0 0 0 0 0 2\r\n" + "2 3 4 5 6 6\r\n" + "0 0 0 0 0 2\r\n"
+//				+ "0 2 0 0 0 0\r\n" + "3 9 3 0 0 1";
+		// 48
 //		String src = "6\r\n" + "1 1 1 1 1 1\r\n" + "2 2 6 2 2 3\r\n" + "2 2 5 2 2 3\r\n" + "2 2 2 4 6 3\r\n"
 //				+ "0 0 0 0 0 6\r\n" + "0 0 0 0 0 9";
+		// 39
 		String src = "6\r\n" + "5 4 3 2 3 4\r\n" + "4 3 2 3 4 5\r\n" + "3 2 9 5 6 6\r\n" + "2 1 2 3 4 5\r\n"
 				+ "3 2 1 6 5 4\r\n" + "6 6 6 6 6 6";
+		// 60
 //		String src = "3\r\n" + "0 0 0\r\n" + "0 0 0\r\n" + "0 9 0";
+		// 0
 //		String src = "4\r\n" + "4 3 2 1\r\n" + "0 0 0 0\r\n" + "0 0 9 0\r\n" + "1 2 3 4";
+		// 14
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		br = new BufferedReader(new StringReader(src));
 		StringTokenizer st;
@@ -32,9 +40,9 @@ public class Main_16236아기상어3 {
 				map[i][j] = tmp;
 			}
 		}
-		for (int[] row : map) {
-			System.out.println(Arrays.toString(row));
-		}
+//		for (int[] row : map) {
+//			System.out.println(Arrays.toString(row));
+//		}
 		// 상어 처음크기는 2
 		// 1초에 상하좌우 인접한 한칸씩 이동한다
 		// 자신의 크기보다 큰물고기가 있는 칸은 지나갈수없어
@@ -55,7 +63,7 @@ public class Main_16236아기상어3 {
 		eatSum = 0;
 		ans = 0;
 		bfs(xyS[0], xyS[1], map, 0, 2, 0);
-		System.out.println(ans + "-----");
+		System.out.println(ans);
 	}
 
 	static int ans;
@@ -68,21 +76,24 @@ public class Main_16236아기상어3 {
 
 	static void bfs(int x, int y, int[][] map, int eatF, int sizeS, int time) {
 		// 만약 뭐 먹었으면 거기서부터 다시 시작하는걸로...??
-		List<int[]> sameDist = new ArrayList<>();
-		System.out.println(eatSum + "---------------------------시작" + x + " " + y + " eatF:" + eatF + " sizeS:" + sizeS
-				+ " time:" + time);
+		List<SameDist> sameDist = new ArrayList<>();
+//		System.out.println(eatSum + "---------------------------시작" + x + " " + y + " eatF:" + eatF + " sizeS:" + sizeS
+//				+ " time:" + time);
 		Queue<Shark> s = new LinkedList<>();
 		boolean[][] visit = new boolean[N][N];// 먹은거....?
 		s.offer(new Shark(x, y, 0));
 		visit[x][y] = true;
-//		eatF = 0;
-//		sizeS = 2;
-//		time = 0;
-//		ans = time;
-		go: while (!s.isEmpty()) {// 깊이 우선인것같다.
-			Shark tmp = s.poll();
+		go: while (!s.isEmpty()) {
 //			System.out.println(eatF + " " + map[tmp.x][tmp.y] + " " + tmp);
 			ans = time;
+
+//			 
+			if (sameDist.size() >= 2) {
+				break;
+			}
+
+			Shark tmp = s.poll();
+//			System.out.println("tmptmptmp" + tmp);
 			for (int i = 0; i < 4; i++) {// 4방향으로 움직인다ㅏㅏ
 				int cx = tmp.x + dx[i];
 				int cy = tmp.y + dy[i];
@@ -104,21 +115,24 @@ public class Main_16236아기상어3 {
 						s.offer(new Shark(cx, cy, tmp.dist + 1));
 						visit[cx][cy] = true;
 					} else if (map[cx][cy] < sizeS) {// 물고기보다 크면 먹을 수 있어
-						map[cx][cy] = 0;// 먹었따
-						eatF++;
-						eatSum++;
-						if (eatF == sizeS) {
-							sizeS++;
-							eatF = 0;
-						}
-						System.out.println("갸아아악" + (tmp.dist + 1) + " " + cx + " " + cy);
-						time += tmp.dist + 1;
-						if (eatSum == M) {
-							ans = time;
-							return;
-						}
-						bfs(cx, cy, map, eatF, sizeS, time);
-						break go;
+						sameDist.add(new SameDist(cx, cy, tmp.dist + 1));
+//						System.out.println("여기에 물고기있어" + cx + " " + cy);
+//						s.offer(new Shark(x, y, tmp.dist));
+//						map[cx][cy] = 0;// 먹었따
+//						eatF++;
+//						eatSum++;
+//						if (eatF == sizeS) {
+//							sizeS++;
+//							eatF = 0;
+//						}
+//						System.out.println("갸아아악" + (tmp.dist + 1) + " " + cx + " " + cy);
+//						time += tmp.dist + 1;
+//						if (eatSum == M) {
+//							ans = time;
+//							return;
+//						}
+//						bfs(cx, cy, map, eatF, sizeS, time);
+//						break go;
 					} else {
 						continue;// 못지나가
 					}
@@ -127,7 +141,61 @@ public class Main_16236아기상어3 {
 			}
 //			ans = time;
 		}
+
+		if (!sameDist.isEmpty()) {
+			Collections.sort(sameDist);
+			System.out.println(sameDist);
+			SameDist sd = sameDist.get(0);
+//			System.out.println("이것은 리스트이다아" + sd);
+			map[sd.x][sd.y] = 0;// 먹었따
+			eatF++;
+			eatSum++;
+			if (eatF == sizeS) {
+				sizeS++;
+				eatF = 0;
+			}
+//			System.out.println("같은 거리안" + (sd.dist + 1) + " " + sd.x + " " + sd.y);
+			time += sd.dist;
+			if (eatSum == M) {
+				ans = time;
+				return;
+			}
+			bfs(sd.x, sd.y, map, eatF, sizeS, time);
+			return;
+		}
+
 //		ans = time;
+	}
+
+	static class SameDist implements Comparable<SameDist> {
+		int x;
+		int y;
+		int dist;
+
+		public SameDist(int x, int y, int dist) {
+			super();
+			this.x = x;
+			this.y = y;
+			this.dist = dist;
+		}
+
+		@Override
+		public String toString() {
+			return "SameDist [x=" + x + ", y=" + y + ", dist=" + dist + "]";
+		}
+
+		@Override
+		public int compareTo(SameDist o) {
+			if (this.dist == o.dist) {
+				if (this.x == o.x) {
+					return this.y - o.y;
+				}
+				return this.x - o.x;
+			}
+			return this.dist - o.dist;
+
+		}
+
 	}
 
 	static class Shark {
