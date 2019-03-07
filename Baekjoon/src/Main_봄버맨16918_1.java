@@ -1,15 +1,15 @@
 import java.io.*;
 import java.util.*;
 
-public class Main_봄버맨16918 {
+public class Main_봄버맨16918_1 {
 //	public class Main {
 	public static void main(String[] args) throws Exception {
 //		String src = "6 7 3\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
 //				+ "OO.....";
-//		String src = "6 7 4\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
-//				+ "OO.....";
-		String src = "6 7 5\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
+		String src = "6 7 3\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
 				+ "OO.....";
+//		String src = "6 7 5\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
+//				+ "OO.....";
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		br = new BufferedReader(new StringReader(src));
@@ -20,6 +20,9 @@ public class Main_봄버맨16918 {
 		String[][] map = new String[R][C];
 		Queue<Bomb> bomb = new LinkedList<>();
 
+		String[][] ori = new String[R][C];
+		String[][] A = new String[R][C];
+		String[][] O = new String[R][C];
 		for (int i = 0; i < R; i++) {
 			String[] tmp = br.readLine().split("");
 			for (int j = 0; j < C; j++) {
@@ -30,26 +33,35 @@ public class Main_봄버맨16918 {
 
 			}
 		}
-		System.out.println(bomb);
-		for (String[] row : map) {
-			System.out.println(Arrays.toString(row));
+		for (int a = 0; a < R; a++) {
+			for (int b = 0; b < C; b++) {
+				ori[a][b] = map[a][b];
+			}
 		}
+		int idx = 4;
+		if (N < 4) {
+			idx = N;
+		}else {
+			
+		}
+		// 3 7 은 B
+		// 5 9 는 A
+		// 2의 배수는 O
 
 		int[] dx = { -1, 0, 1, 0 };
 		int[] dy = { 0, -1, 0, 1 };
-		for (int time = 2; time <= N; time++) {// 시간...
+		for (int time = 2; time <= idx; time++) {// 시간...
 //			System.out.println(bomb);
-			System.out.println("시간" + time + "초후------------------------");
+//			System.out.println("시간" + time + "초후------------------------");
 			if (time % 2 == 0) {// 폭탄을 설치한드아ㅏㅏㅏ
 				for (int i = 0; i < R; i++) {
 					for (int j = 0; j < C; j++) {
 						if (map[i][j].equals(".")) {
-							map[i][j] = "X";
+							map[i][j] = "O";
 							bomb.add(new Bomb(i, j, time));
 						}
 					}
 				}
-
 			}
 			while (!bomb.isEmpty()) {
 				if (bomb.peek().setTime + 3 != time) {
@@ -78,9 +90,68 @@ public class Main_봄버맨16918 {
 					}
 				}
 			}
-			for (String[] row : map) {
-				System.out.println(Arrays.toString(row));
+			if (time == 2) {
+				for (int a = 0; a < R; a++) {
+					for (int b = 0; b < C; b++) {
+						O[a][b] = map[a][b];
+					}
+				}
+//				O = map.clone();
+			} else if (time == 3) {
+				for (int a = 0; a < R; a++) {
+					for (int b = 0; b < C; b++) {
+						A[a][b] = map[a][b];
+					}
+				}
 			}
+		}
+//		System.out.println("----------------------");
+//		for (String[] row : ori) {
+//			System.out.println(Arrays.toString(row));
+//		}
+//		System.out.println("----------------------");
+//		for (String[] row : A) {
+//			System.out.println(Arrays.toString(row));
+//		}
+//		System.out.println("----------------------");
+//		for (String[] row : O) {
+//			System.out.println(Arrays.toString(row));
+//		}
+
+		if (N <= 1) {
+			for (int i = 0; i < R; i++) {
+				for (int j = 0; j < C; j++) {
+					System.out.print(ori[i][j]);
+				}
+				System.out.println();
+			}
+		} else {
+			if (N % 2 == 0) {
+				for (int i = 0; i < R; i++) {
+					for (int j = 0; j < C; j++) {
+						System.out.print(O[i][j]);
+					}
+					System.out.println();
+				}
+
+			} else if (N % 2 == 1) {
+				if (N % 4 == 1) {// 5 9 ori
+					for (int i = 0; i < R; i++) {
+						for (int j = 0; j < C; j++) {
+							System.out.print(ori[i][j]);
+						}
+						System.out.println();
+					}
+				} else {
+					for (int i = 0; i < R; i++) {
+						for (int j = 0; j < C; j++) {
+							System.out.print(A[i][j]);
+						}
+						System.out.println();
+					}
+				}
+			}
+
 		}
 //		System.out.println(bomb);
 		// 빈 칸은 '.'로, 폭탄은 'O'로 주어진다.
