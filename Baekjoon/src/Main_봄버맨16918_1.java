@@ -6,10 +6,10 @@ public class Main_봄버맨16918_1 {
 	public static void main(String[] args) throws Exception {
 //		String src = "6 7 3\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
 //				+ "OO.....";
-		String src = "6 7 3\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
-				+ "OO.....";
-//		String src = "6 7 5\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
+//		String src = "6 7 3\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
 //				+ "OO.....";
+		String src = "6 7 4\r\n" + ".......\r\n" + "...O...\r\n" + "....O..\r\n" + ".......\r\n" + "OO.....\r\n"
+				+ "OO.....";
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		br = new BufferedReader(new StringReader(src));
@@ -20,9 +20,6 @@ public class Main_봄버맨16918_1 {
 		String[][] map = new String[R][C];
 		Queue<Bomb> bomb = new LinkedList<>();
 
-		String[][] ori = new String[R][C];
-		String[][] A = new String[R][C];
-		String[][] O = new String[R][C];
 		for (int i = 0; i < R; i++) {
 			String[] tmp = br.readLine().split("");
 			for (int j = 0; j < C; j++) {
@@ -33,125 +30,80 @@ public class Main_봄버맨16918_1 {
 
 			}
 		}
-		for (int a = 0; a < R; a++) {
-			for (int b = 0; b < C; b++) {
-				ori[a][b] = map[a][b];
-			}
-		}
 		int idx = 4;
-		if (N < 4) {
-			idx = N;
-		}else {
-			
+		if (N < 2) {
+
+		} else {
+			if (N % 2 == 0) {
+				idx = 2;
+			} else {
+				if (N % 2 == 1) {
+					if (N % 4 == 1) {// 5 9
+						idx = 0;
+					} else {// 3 7
+							// B
+						idx = 3;
+					}
+				}
+			}
+
+			int[] dx = { -1, 0, 1, 0 };
+			int[] dy = { 0, -1, 0, 1 };
+			for (int time = 2; time <= idx; time++) {// 시간...
+//			System.out.println(bomb);
+//			System.out.println("시간" + time + "초후------------------------");
+				if (time == 2) {// 폭탄을 설치한드아ㅏㅏㅏ
+					for (int i = 0; i < R; i++) {
+						for (int j = 0; j < C; j++) {
+							if (map[i][j].equals(".")) {
+								map[i][j] = "O";
+//								bomb.add(new Bomb(i, j, time));
+							}
+						}
+					}
+				}
+				if (time == 3) {
+
+					while (!bomb.isEmpty()) {
+//					if (bomb.peek().setTime + 3 != time) {
+//						break;
+//					}
+						Bomb B = bomb.poll();
+//				if (map[B.x][B.y].equals(".")) {
+//					continue;// 이미 처리된애면...
+//				}
+						map[B.x][B.y] = ".";
+						for (int i = 0; i < R; i++) {
+							for (int j = 0; j < C; j++) {
+
+								for (int k = 0; k < 4; k++) {// 4방향을 돈다....
+									int cx = B.x + dx[k];
+									int cy = B.y + dy[k];
+									if (cx >= R || cy >= C || cx < 0 || cy < 0) {
+										continue;
+									}
+									if (map[cx][cy].equals(".")) {
+										continue;// 이미 처리된애면...
+									}
+//							System.out.println("터진당" + cx + " " + cy);
+									map[cx][cy] = ".";// 터졌대.
+								}
+							}
+						}
+					}
+				}
+			}
+
 		}
 		// 3 7 은 B
 		// 5 9 는 A
 		// 2의 배수는 O
 
-		int[] dx = { -1, 0, 1, 0 };
-		int[] dy = { 0, -1, 0, 1 };
-		for (int time = 2; time <= idx; time++) {// 시간...
-//			System.out.println(bomb);
-//			System.out.println("시간" + time + "초후------------------------");
-			if (time % 2 == 0) {// 폭탄을 설치한드아ㅏㅏㅏ
-				for (int i = 0; i < R; i++) {
-					for (int j = 0; j < C; j++) {
-						if (map[i][j].equals(".")) {
-							map[i][j] = "O";
-							bomb.add(new Bomb(i, j, time));
-						}
-					}
-				}
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				System.out.print(map[i][j]);
 			}
-			while (!bomb.isEmpty()) {
-				if (bomb.peek().setTime + 3 != time) {
-					break;
-				}
-				Bomb B = bomb.poll();
-//				if (map[B.x][B.y].equals(".")) {
-//					continue;// 이미 처리된애면...
-//				}
-				map[B.x][B.y] = ".";
-				for (int i = 0; i < R; i++) {
-					for (int j = 0; j < C; j++) {
-
-						for (int k = 0; k < 4; k++) {// 4방향을 돈다....
-							int cx = B.x + dx[k];
-							int cy = B.y + dy[k];
-							if (cx >= R || cy >= C || cx < 0 || cy < 0) {
-								continue;
-							}
-							if (map[cx][cy].equals(".")) {
-								continue;// 이미 처리된애면...
-							}
-//							System.out.println("터진당" + cx + " " + cy);
-							map[cx][cy] = ".";// 터졌대.
-						}
-					}
-				}
-			}
-			if (time == 2) {
-				for (int a = 0; a < R; a++) {
-					for (int b = 0; b < C; b++) {
-						O[a][b] = map[a][b];
-					}
-				}
-//				O = map.clone();
-			} else if (time == 3) {
-				for (int a = 0; a < R; a++) {
-					for (int b = 0; b < C; b++) {
-						A[a][b] = map[a][b];
-					}
-				}
-			}
-		}
-//		System.out.println("----------------------");
-//		for (String[] row : ori) {
-//			System.out.println(Arrays.toString(row));
-//		}
-//		System.out.println("----------------------");
-//		for (String[] row : A) {
-//			System.out.println(Arrays.toString(row));
-//		}
-//		System.out.println("----------------------");
-//		for (String[] row : O) {
-//			System.out.println(Arrays.toString(row));
-//		}
-
-		if (N <= 1) {
-			for (int i = 0; i < R; i++) {
-				for (int j = 0; j < C; j++) {
-					System.out.print(ori[i][j]);
-				}
-				System.out.println();
-			}
-		} else {
-			if (N % 2 == 0) {
-				for (int i = 0; i < R; i++) {
-					for (int j = 0; j < C; j++) {
-						System.out.print(O[i][j]);
-					}
-					System.out.println();
-				}
-
-			} else if (N % 2 == 1) {
-				if (N % 4 == 1) {// 5 9 ori
-					for (int i = 0; i < R; i++) {
-						for (int j = 0; j < C; j++) {
-							System.out.print(ori[i][j]);
-						}
-						System.out.println();
-					}
-				} else {
-					for (int i = 0; i < R; i++) {
-						for (int j = 0; j < C; j++) {
-							System.out.print(A[i][j]);
-						}
-						System.out.println();
-					}
-				}
-			}
-
+			System.out.println();
 		}
 //		System.out.println(bomb);
 		// 빈 칸은 '.'로, 폭탄은 'O'로 주어진다.
