@@ -16,7 +16,7 @@ public class Main_16236아기상어4 {
 				+ "3 2 1 6 5 4\r\n" + "6 6 6 6 6 6";
 		// 60
 //		String src = "3\r\n" + "0 0 0\r\n" + "0 0 0\r\n" + "0 9 0";
-		// 0
+//		 0
 //		String src = "4\r\n" + "4 3 2 1\r\n" + "0 0 0 0\r\n" + "0 0 9 0\r\n" + "1 2 3 4";
 		// 14
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -75,25 +75,22 @@ public class Main_16236아기상어4 {
 	// 위 왼쪽 아래 오른
 
 	static void bfs(int x, int y, int[][] map, int eatF, int sizeS, int time) {
-		// 만약 뭐 먹었으면 거기서부터 다시 시작하는걸로...??
+		// 만약 뭐 먹었으면 거기서부터 다시 시작하는걸로
 		List<SameDist> sameDist = new ArrayList<>();
 //		System.out.println(eatSum + "---------------------------시작" + x + " " + y + " eatF:" + eatF + " sizeS:" + sizeS
 //				+ " time:" + time);
 		Queue<Shark> s = new LinkedList<>();
-		boolean[][] visit = new boolean[N][N];// 먹은거....?
+		boolean[][] visit = new boolean[N][N];// 방문
 		s.offer(new Shark(x, y, 0));
 		visit[x][y] = true;
 		go: while (!s.isEmpty()) {
-//			System.out.println(eatF + " " + map[tmp.x][tmp.y] + " " + tmp);
-			ans = time;
+			ans = time;//만약 못찾고 나간다면 
 
-//			 
 			if (sameDist.size() >= 2) {
 				break;
 			}
 
 			Shark tmp = s.poll();
-//			System.out.println("tmptmptmp" + tmp);
 			for (int i = 0; i < 4; i++) {// 4방향으로 움직인다ㅏㅏ
 				int cx = tmp.x + dx[i];
 				int cy = tmp.y + dy[i];
@@ -109,44 +106,24 @@ public class Main_16236아기상어4 {
 					// 거리가 증가한다.
 					s.offer(new Shark(cx, cy, tmp.dist + 1));
 					visit[cx][cy] = true;
-//					time++;
 				} else if (map[cx][cy] != 0) {// 물고기가 있는곳.
 					if (map[cx][cy] == sizeS) {// 크기가 같으면 지나갈수있고 먹지는 못해
 						s.offer(new Shark(cx, cy, tmp.dist + 1));
 						visit[cx][cy] = true;
 					} else if (map[cx][cy] < sizeS) {// 물고기보다 크면 먹을 수 있어
+						if (!sameDist.isEmpty() && tmp.dist + 1 > sameDist.get(0).dist) {
+							continue;
+						}
 						sameDist.add(new SameDist(cx, cy, tmp.dist + 1));
-//						System.out.println("여기에 물고기있어" + cx + " " + cy);
-//						s.offer(new Shark(x, y, tmp.dist));
-//						map[cx][cy] = 0;// 먹었따
-//						eatF++;
-//						eatSum++;
-//						if (eatF == sizeS) {
-//							sizeS++;
-//							eatF = 0;
-//						}
-//						System.out.println("갸아아악" + (tmp.dist + 1) + " " + cx + " " + cy);
-//						time += tmp.dist + 1;
-//						if (eatSum == M) {
-//							ans = time;
-//							return;
-//						}
-//						bfs(cx, cy, map, eatF, sizeS, time);
-//						break go;
-					} else {
-						continue;// 못지나가
 					}
 				}
 
 			}
-//			ans = time;
 		}
-
 		if (!sameDist.isEmpty()) {
 			Collections.sort(sameDist);
 			System.out.println(sameDist);
 			SameDist sd = sameDist.get(0);
-//			System.out.println("이것은 리스트이다아" + sd);
 			map[sd.x][sd.y] = 0;// 먹었따
 			eatF++;
 			eatSum++;
@@ -154,7 +131,6 @@ public class Main_16236아기상어4 {
 				sizeS++;
 				eatF = 0;
 			}
-//			System.out.println("같은 거리안" + (sd.dist + 1) + " " + sd.x + " " + sd.y);
 			time += sd.dist;
 			if (eatSum == M) {
 				ans = time;
@@ -164,7 +140,6 @@ public class Main_16236아기상어4 {
 			return;
 		}
 
-//		ans = time;
 	}
 
 	static class SameDist implements Comparable<SameDist> {
@@ -182,6 +157,19 @@ public class Main_16236아기상어4 {
 		@Override
 		public String toString() {
 			return "SameDist [x=" + x + ", y=" + y + ", dist=" + dist + "]";
+		}
+
+		public boolean equals(SameDist a) {
+			if (this.x != a.x) {
+				return false;
+			}
+			if (this.y != a.y) {
+				return false;
+			}
+			if (this.dist != a.dist) {
+				return false;
+			}
+			return true;
 		}
 
 		@Override
