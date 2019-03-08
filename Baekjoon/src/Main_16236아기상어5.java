@@ -4,7 +4,7 @@ import java.util.*;
 public class Main_16236아기상어5 {
 //	public class Main {
 	public static void main(String[] args) throws Exception {
-		String src = "3\r\n" + "0 0 1\r\n" + "0 0 0\r\n" + "0 9 0";
+//		String src = "3\r\n" + "0 0 1\r\n" + "0 0 0\r\n" + "0 9 0";
 		// 3
 //		String src = "6\r\n" + "6 0 6 0 6 1\r\n" + "0 0 0 0 0 2\r\n" + "2 3 4 5 6 6\r\n" + "0 0 0 0 0 2\r\n"
 //				+ "0 2 0 0 0 0\r\n" + "3 9 3 0 0 1";
@@ -12,8 +12,8 @@ public class Main_16236아기상어5 {
 //		String src = "6\r\n" + "1 1 1 1 1 1\r\n" + "2 2 6 2 2 3\r\n" + "2 2 5 2 2 3\r\n" + "2 2 2 4 6 3\r\n"
 //				+ "0 0 0 0 0 6\r\n" + "0 0 0 0 0 9";
 		// 39
-//		String src = "6\r\n" + "5 4 3 2 3 4\r\n" + "4 3 2 3 4 5\r\n" + "3 2 9 5 6 6\r\n" + "2 1 2 3 4 5\r\n"
-//				+ "3 2 1 6 5 4\r\n" + "6 6 6 6 6 6";
+		String src = "6\r\n" + "5 4 3 2 3 4\r\n" + "4 3 2 3 4 5\r\n" + "3 2 9 5 6 6\r\n" + "2 1 2 3 4 5\r\n"
+				+ "3 2 1 6 5 4\r\n" + "6 6 6 6 6 6";
 		// 60
 //		String src = "3\r\n" + "0 0 0\r\n" + "0 0 0\r\n" + "0 9 0";
 //		 0
