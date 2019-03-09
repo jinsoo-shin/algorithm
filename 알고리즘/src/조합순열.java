@@ -5,10 +5,10 @@ public class 조합순열 {
 	public static void main(String[] args) {
 		// nCr
 		int[] arr = { 1, 2, 3, 4 };
-		int N = arr.length;
-		int r = 3;
-		nCr(arr, N, r, 0, 0, new boolean[N]);
-		nCrFornPr(arr, N, r, 0, 0, new boolean[N]);
+		int N = arr.length;//4개중에서
+		int r = 3; //3개를 선택하고
+		nCr(arr, N, r, 0, 0, new boolean[N]); //조합
+		nCrFornPr(arr, N, r, 0, 0, new boolean[N]);//순열
 	}
 
 	static void nCr(int[] arr, int N, int r, int idx, int cnt, boolean[] flag) {// combination

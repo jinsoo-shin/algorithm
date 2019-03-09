@@ -56,9 +56,9 @@ public class Solution_2382 {
 	static void find(int time) {
 		Collections.sort(q);
 //		if(time==M) {
-		System.out.println("-------찾아라--qqq-----------");
-		System.out.println(q);
-		System.out.println("--------------------");
+//		System.out.println("-------찾아라--qqq-----------");
+//		System.out.println(q);
+//		System.out.println("--------------------");
 
 //		}
 		// 어으음.... 같은 애를 찾는다.....???
@@ -97,12 +97,12 @@ public class Solution_2382 {
 			}
 
 		}
-		System.out.println("-------중복인애들-----------");
-		System.out.println(tmp);
-		System.out.println("--------------------");
-		System.out.println("------계산했어------------");
-		System.out.println(numList);
-		System.out.println("--------------------");
+//		System.out.println("-------중복인애들-----------");
+//		System.out.println(tmp);
+//		System.out.println("--------------------");
+//		System.out.println("------계산했어------------");
+//		System.out.println(numList);
+//		System.out.println("--------------------");
 
 		int[] sum = new int[numList.size()];
 		int listIdx = 0;
@@ -114,11 +114,14 @@ public class Solution_2382 {
 
 			}
 		}
+		
+		
+//		System.out.println(Arrays.toString(sum));
 		for (int i = 0; i < numList.size(); i++) {
 			Sm ssm = numList.get(i);
-			numList.set(idx, new Sm(ssm.x, ssm.y, sum[i], ssm.dir));
+			numList.set(i, new Sm(ssm.x, ssm.y, sum[i], ssm.dir));
 		}
-		System.out.println(Arrays.toString(sum));
+//		System.out.println(Arrays.toString(sum));
 		for (int i = 0; i < tmp.size(); i++) {
 			q.remove(tmp.get(i));
 		}
@@ -129,13 +132,13 @@ public class Solution_2382 {
 //		System.out.println(q);
 //		System.out.println("--------------------");
 
-		System.out.println("시간시간" + time);
+//		System.out.println("시간시간" + time);
 		K = q.size();
 		if (time == M) {
 			for (int i = 0; i < q.size(); i++) {
 				ans += q.get(i).num;
 			}
-			System.out.println(q);
+//			System.out.println(q);
 		}
 	}
 
