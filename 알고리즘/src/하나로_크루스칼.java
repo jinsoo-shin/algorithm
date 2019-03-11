@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class 하나로 {
+public class 하나로_크루스칼 {
 
 //
 //Disjoint-Set 서로소 집합

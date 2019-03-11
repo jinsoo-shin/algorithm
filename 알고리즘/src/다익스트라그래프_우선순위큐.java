@@ -63,8 +63,8 @@ public class 다익스트라그래프_우선순위큐 {
 					heap.offer(new Node(i, distance[i]));
 				}
 			}
+			System.out.println("1" + Arrays.toString(distance));
 		}
-		System.out.println("1" + Arrays.toString(distance));
 	}
 
 	static class Node implements Comparable<Node> {
