@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.*;
 
-public class Solution_5642_성하 {
+public class Solution_5642_성하ver {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -30,7 +30,7 @@ public class Solution_5642_성하 {
 					continue;
 
 				for (int j = i + 1; j < N; j++) {
-					if (sum - arr[j] < totalmax * -1)
+					if (sum + arr[j] < totalmax * -1)
 						break;
 
 					sum += arr[j];
