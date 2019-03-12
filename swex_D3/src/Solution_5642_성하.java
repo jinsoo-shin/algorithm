@@ -6,7 +6,9 @@ import java.util.*;
 
 public class Solution_5642_성하 {
 	public static void main(String[] args) throws IOException {
+		String src = "1\r\n" + "5\r\n" + "1 3 -8 18 -8";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		br = new BufferedReader(new StringReader(src));
 		StringTokenizer st;
 		int T = Integer.parseInt(br.readLine());
 		for (int t = 1; t <= T; t++) {
@@ -30,7 +32,8 @@ public class Solution_5642_성하 {
 					continue;
 
 				for (int j = i + 1; j < N; j++) {
-					if (sum - arr[j] < totalmax * -1)
+//					if (sum - arr[j] < totalmax * -1)
+					if (sum + totalmax < arr[j])
 						break;
 
 					sum += arr[j];
