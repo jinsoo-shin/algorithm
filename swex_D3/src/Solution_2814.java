@@ -26,15 +26,16 @@ public class Solution_2814 {
 				list[from].add(to);
 				list[to].add(from);
 			}
-
-			ans = 0;
+			ans = 1;
 			if (M != 0) {
 				// 굴리기
-				boolean[] visit = new boolean[N];
-				visit[0] = true;
-				bfs(visit, 0, 1);
-//				for (int i = 0; i < N; i++) {
-//				}
+				for (int i = 0; i < N; i++) {
+					StringBuilder sb = new StringBuilder();
+					sb.append(i);
+					boolean[] visit = new boolean[N];
+					visit[i] = true;
+					re(visit, i, sb);
+				}
 			}
 
 			System.out.println("#" + tc + " " + ans);
@@ -44,30 +45,28 @@ public class Solution_2814 {
 	static List<Integer>[] list;
 	static int ans, N, M;
 
-	static void bfs(boolean[] visit, int idx, int cnt) {
-		int check = 0;
-		if (cnt == N) {
-			System.out.println(cnt + " dddd");
-			return;
-		}
-		System.out.println(idx);
+	static void re(boolean[] visit, int idx, StringBuilder sb) {
+		int cnt = 0;
+
 		for (int i = 0; i < list[idx].size(); i++) {
 			int tmp = list[idx].get(i);
 			if (visit[tmp]) {
-				check++;
-				System.out.println(cnt + " dddd");
+				cnt++;
 				continue;
 			}
 
-			visit[tmp] = true;
-			bfs(visit, tmp, cnt + 1);
-			visit[tmp] = false;
-			bfs(visit, tmp, cnt);
+			sb.append(tmp);
+			visit[idx] = true;
+			re(visit, tmp, sb);
+
+			visit[idx] = false;
+			sb.deleteCharAt(sb.length() - 1);
+
 		}
-		System.out.println(list[idx].size());
-		if (check == list[idx].size()) {
-			System.out.println("호우");
+		if (cnt == list[idx].size()) {
+			ans = Math.max(ans, sb.length());
 			return;
 		}
+
 	}
 }
