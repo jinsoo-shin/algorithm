@@ -1,11 +1,11 @@
 import java.io.*;
 import java.util.*;
 
-public class Solution_수영장2 {
+public class Solution_수영장dfs {
 //	public class Solution {
 	public static void main(String[] args) throws Exception {
-//		String src = "1\r\n" + "10 40 100 300\r\n" + "0 0 2 9 1 5 0 0 0 0 0 0";
-		String src = "1\r\n" + "10 100 50 300\r\n" + "0 0 0 0 0 0 0 0 6 2 7 8";
+		String src = "1\r\n" + "10 40 100 300\r\n" + "0 0 2 9 1 5 0 0 0 0 0 0";
+//		String src = "1\r\n" + "10 100 50 300\r\n" + "0 0 0 0 0 0 0 0 6 2 7 8";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		br = new BufferedReader(new StringReader(src));
 		StringTokenizer st;
@@ -33,17 +33,17 @@ public class Solution_수영장2 {
 					dp[i] = month[i] * money[0];
 				}
 			}
-//			System.out.println("하루" + Arrays.toString(dp));
+			System.out.println("하루" + Arrays.toString(dp));
 			for (int i = 0; i < 12; i++) {
 				if (dp[i] != 0 && dp[i] > money[1]) {
 					dp[i] = money[1];
 				}
 			}
-//			System.out.println("한달" + Arrays.toString(dp));
+			System.out.println("한달" + Arrays.toString(dp));
 			min = Integer.MAX_VALUE;
 			dfs(dp, 0, 0);
 //			System.out.println(min);
-			if (min > money[3]) {
+			if (min > money[3]) {//마지막 1년치랑 비교하기
 				ans = money[3];
 			} else {
 				ans = min;
