@@ -17,76 +17,92 @@ public class Solution_점심식사시간 {
 		for (int tc = 1; tc <= T; tc++) {
 			N = Integer.parseInt(br.readLine());
 			ans = 0;
-//			q = new LinkedList<>();
 			map = new int[N][N];
-			people = new ArrayList<>();
+			stair = new LinkedList[2];
+			for (int i = 0; i < 2; i++) {
+				stair[i] = new LinkedList<>();
+			}
+			int[][] s = new int[2][2];
+			people = new PriorityQueue<>();
 			int idx = 0;
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < N; j++) {
 					int tmp = Integer.parseInt(st.nextToken());
 					map[i][j] = tmp;
-					if (tmp == 1) {
-						people.add(new People(idx, i, j, Integer.MAX_VALUE, 0));
+					if (tmp > 1) {
+						s[idx][0] = i;
+						s[idx][1] = j;
 						idx++;
 					}
 				}
 			}
 			idx = 0;
-			for (int i = 0; i < N; i++) {
+			for (int i = 0; i < N; i++) {// 일단 people리스트에
 				for (int j = 0; j < N; j++) {
 					if (map[i][j] == 1) {
 						boolean[][] visit = new boolean[N][N];
 						visit[i][j] = true;
-						dfs(new People(idx, i, j, 0, 0), visit);
+						bfs(new People(idx, i, j, 0, 0), visit);
 						idx++;
 					}
 				}
 			}
-			System.out.println(people);
+			while (!people.isEmpty()) {
+				People tmp = people.peek();
+				for (int i = 0; i < 2; i++) {
+					if (s[i][0] == tmp.x && s[i][1] == tmp.y) {
+						stair[i].add(people.poll());
+					}
+				}
+			}
+			for (int i = 0; i < 2; i++) {
+				System.out.println(stair[i]);
+				System.out.println("----");
+			}
+//			System.out.println(people);
 			System.out.println("#" + tc + " " + ans);
 		}
 	}
 
-	static void dfs(People tmp, boolean[][] visit) {
-//		System.out.println(tmp);
-		for (int i = 0; i < 4; i++) {
-			int cx = tmp.x + dx[i];
-			int cy = tmp.y + dy[i];
-			if (cx < 0 || cy < 0 || cx >= N || cy >= N) {
-				continue;
-			}
-			if (visit[cx][cy]) {
-				continue;
-			}
-			if (map[cx][cy] < 2) {
-				visit[cx][cy] = true;
-				dfs(new People(tmp.num, cx, cy, tmp.time + 1, 0), visit);
-				visit[cx][cy] = false;
-			} else if (map[cx][cy] >= 2) {
-				find(tmp.num, cx, cy, tmp.time + 1, map[cx][cy]);
-				continue;
+	static void bfs(People p, boolean[][] visit) {// 일단 만
+		Queue<People> p1 = new LinkedList<>();
+		p1.add(p);
+		int findS = 0;
+		while (findS < 2) {
+			People tmp = p1.poll();
+			for (int i = 0; i < 4; i++) {
+				int cx = tmp.x + dx[i];
+				int cy = tmp.y + dy[i];
+				if (cx < 0 || cy < 0 || cx >= N || cy >= N) {
+					continue;
+				}
+				if (visit[cx][cy]) {
+					continue;
+				}
+				if (map[cx][cy] < 2) {
+					visit[cx][cy] = true;
+					p1.add(new People(tmp.num, cx, cy, tmp.time + 1, 0));
+					visit[cx][cy] = false;
+				} else if (map[cx][cy] >= 2) {
+					visit[cx][cy] = true;
+					people.add(new People(tmp.num, cx, cy, tmp.time + 1, map[cx][cy]));
+					findS++;
+					continue;
+				}
 			}
 		}
-
 	}
 
-	static void find(int num, int x, int y, int time, int h) {
-		People tmp = people.get(num);
-		if (time < tmp.time) {// 더 짧은게 발견되면
-			people.set(num, new People(tmp.num, x, y, time, h));
-		}
-
-	}
-
-	static List<People> people;
+	static Queue<People> people;
+	static Queue<People>[] stair;// 계단1
 //	static Queue<People> q;
 	static int N, ans;
 	static int[][] map;
 	static int[] dx = new int[] { 0, 0, -1, 1 };
 	static int[] dy = new int[] { -1, 1, 0, 0 };
 
-	static class People {
+	static class People implements Comparable<People> {
 		int num;
 		int x;
 		int y;
@@ -107,5 +123,9 @@ public class Solution_점심식사시간 {
 			return "People [num=" + num + ", x=" + x + ", y=" + y + ", time=" + time + ", stairH=" + stairH + "]\n";
 		}
 
+		@Override
+		public int compareTo(People o) {
+			return this.time - o.time;
+		}
 	}
 }
