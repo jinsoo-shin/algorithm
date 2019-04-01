@@ -3,11 +3,25 @@ import java.util.*;
 
 public class Solution_점심식사시간 {
 //	public class Solution {
+	// 대기했을땐 +1안해도되뮤ㅠㅠㅠㅠ
 	public static void main(String[] args) throws Exception {
-		String src = "1\r\n" + "5\r\n" + "0 1 1 0 0\r\n" + "0 0 1 0 3\r\n" + "0 1 0 1 0\r\n" + "0 0 0 0 0\r\n"
-				+ "1 0 5 0 0";// 9
+//		String src = "1\r\n" + "8\r\n" + 
+//				"3 0 0 0 0 0 5 0\r\n" + 
+//				"0 0 0 0 0 0 0 0\r\n" + 
+//				"1 0 0 0 0 0 0 0\r\n" + 
+//				"0 0 0 0 0 0 0 0\r\n" + 
+//				"1 0 1 1 0 0 0 0\r\n" + 
+//				"0 0 0 0 0 0 1 0\r\n" + 
+//				"0 0 0 0 0 0 0 0\r\n" + 
+//				"0 0 0 0 0 0 0 0";// 9
+//		String src = "1\r\n" + "5\r\n" + "0 1 1 0 0\r\n" + "0 0 1 0 3\r\n" + "0 1 0 1 0\r\n" + "0 0 0 0 0\r\n" + "1 0 5 0 0";// 9
+//		String src = "1\r\n" + "9\r\n" + "0 0 0 1 0 0 0 0 0\r\n" + "0 1 0 0 0 0	 0 0 0\r\n" + "0 0 0 0 0 0 0 0 8\r\n" + "7 0 0 0 0 1 0 0 0\r\n"
+//				+ "0 0 0 0 0 1 1 0 0\r\n" + "0 0 0 0 0 0 0 0 0\r\n" + "1 0 0 0 0 1 0 0 0\r\n" + "0 0 0 0 0 0 0 0 0\r\n" + "0 0 0 0 0 0 0 0 0";// 9
+//		String src = "1\r\n" + "10\r\n" + "0 0 0 0 0 0 0 0 0 0\r\n" + "0 0 0 0 1 0 0 0 0 0\r\n" + "0 0 1 0 0 0 0 0 0 0\r\n"
+//				+ "0 0 0 0 0 0 0 0 0 0\r\n" + "0 0 0 0 0 0 0 0 0 0\r\n" + "3 0 1 0 1 0 0 0 0 2\r\n" + "1 1 0 0 1 0 1 0 0 0\r\n"
+//				+ "0 0 0 0 0 0 0 0 0 0\r\n" + "0 0 0 0 0 0 0 0 0 0\r\n" + "0 0 0 0 0 0 0 0 0 0";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		br = new BufferedReader(new StringReader(src));
+//		br = new BufferedReader(new StringReader(src));
 		StringTokenizer st;
 		// 1은 사람
 		// 2~10은 계단의 입구, 계단의 길이
@@ -16,11 +30,11 @@ public class Solution_점심식사시간 {
 		int T = Integer.parseInt(br.readLine());
 		for (int tc = 1; tc <= T; tc++) {
 			N = Integer.parseInt(br.readLine());
-			ans = 0;
+			ans = 987654321;
 			map = new int[N][N];
-			stair = new LinkedList[2];
+			stair = new ArrayList[2];
 			for (int i = 0; i < 2; i++) {
-				stair[i] = new LinkedList<>();
+				stair[i] = new ArrayList<>();
 			}
 			int[][] s = new int[2][2];
 			people = new PriorityQueue<>();
@@ -41,58 +55,111 @@ public class Solution_점심식사시간 {
 			for (int i = 0; i < N; i++) {// 일단 people리스트에
 				for (int j = 0; j < N; j++) {
 					if (map[i][j] == 1) {
-						boolean[][] visit = new boolean[N][N];
-						visit[i][j] = true;
-						bfs(new People(idx, i, j, 0, 0), visit);
+//						boolean[][] visit = new boolean[N][N];
+//						visit[i][j] = true;
+						int cal1 = Math.abs(i - s[0][0]) + Math.abs(j - s[0][1]);
+						int cal2 = Math.abs(i - s[1][0]) + Math.abs(j - s[1][1]);
+						stair[0].add(new People(idx, s[0][0], s[0][1], cal1, map[s[0][0]][s[0][1]]));
+						stair[1].add(new People(idx, s[1][0], s[1][1], cal2, map[s[1][0]][s[1][1]]));
 						idx++;
 					}
 				}
 			}
-			while (!people.isEmpty()) {
-				People tmp = people.peek();
-				for (int i = 0; i < 2; i++) {
-					if (s[i][0] == tmp.x && s[i][1] == tmp.y) {
-						stair[i].add(people.poll());
-					}
-				}
-			}
 			for (int i = 0; i < 2; i++) {
-				System.out.println(stair[i]);
-				System.out.println("----");
+				Collections.sort(stair[i]);
+//				System.out.println(stair[i]);
+//				System.out.println("----");
 			}
-			List<Integer> list1 = new ArrayList<>();
-			List<Integer> list2 = new ArrayList<>();
-			for (int i = 0; i < 6; i++) {
-				list1.add(i);
-			}
-//			pow(new boolean[stair[0].size()], 0);
-			cal(list1, list2);
+			pow(new boolean[idx], 0);
 			System.out.println("#" + tc + " " + ans);
 		}
 	}
 
 	static void cal(List<Integer> list1, List<Integer> list2) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             		Queue<People> q1 = new LinkedList<>();
-		while (q1.size() != 3) {
-			People tmp = stair[0].poll();
+		Queue<People> tmpS1 = new LinkedList<>();// 계단
+		Queue<People> tmpS2 = new LinkedList<>();
+		for (int i = 0; i < stair[0].size(); i++) {
+			tmpS1.add(stair[0].get(i));
+		}
+		for (int i = 0; i < stair[1].size(); i++) {
+			tmpS2.add(stair[1].get(i));
+		}
+//		System.out.println("계단" + tmpS1 + " " + tmpS2);
+//		System.out.println("리스트" + list1 + " " + list2);
+		Queue<People> q1 = new LinkedList<>();
+//		System.out.println(list1);
+		while (q1.size() < 3) {// 계단 꽉차게 넣기
+			if (q1.size() == list1.size()) {
+				break;
+			}
+			People tmp = tmpS1.poll();
 			if (list1.contains(tmp.num)) {
+				tmp.arriveT = tmp.time + 1 + tmp.stairH;
 				q1.add(tmp);
 			}
 		}
-		System.out.println(q1);
-		int time1 = q1.peek().time;
+//		System.out.println(q1);
+		int curTime1 = 0;
 		while (!q1.isEmpty()) {
 			People tmp = q1.poll();
-			System.out.println(tmp);
-			if (tmp.time < time1) {
-				
-			} else {
-				time1 = time1 + tmp.time + 1;
+//			System.out.println(tmp);
+			curTime1 = Math.max(curTime1, tmp.arriveT);
+			if (curTime1 > ans) {
+				return;
 			}
-			System.out.println(time1);
+			while (!tmpS1.isEmpty()) {
+				People next = tmpS1.poll();// 꺼내고..
+//				System.out.println("다음" + next);
+				if (list1.contains(next.num)) {// 있을떄까지 뽑아내자
+					if (tmp.arriveT > next.time) {// 대기타는 경우
+						next.arriveT = tmp.arriveT + next.stairH;
+					} else {// 바로 갈수있는 경우
+						next.arriveT = next.time + next.stairH + 1;
+					}
+					q1.add(next);
+					break;
+				}
+			}
 		}
+//		System.out.println("----------------------");
 		Queue<People> q2 = new LinkedList<>();
-
+//		System.out.println(list2);
+		while (q2.size() < 3) {
+			if (q2.size() == list2.size()) {
+				break;
+			}
+			People tmp = tmpS2.poll();
+			if (list2.contains(tmp.num)) {
+				tmp.arriveT = tmp.time + 1 + tmp.stairH;
+				q2.add(tmp);
+			}
+		}
+//		System.out.println(q2);
+		int curTime2 = 0;
+		while (!q2.isEmpty()) {
+			People tmp = q2.poll();
+//			System.out.println(tmp);
+			curTime2 = Math.max(tmp.arriveT, curTime2);
+			if (curTime2 > ans) {
+				return;
+			}
+			while (!tmpS2.isEmpty()) {
+				People next = tmpS2.poll();// 꺼내고..
+//				System.out.println("다음" + next);
+				if (list2.contains(next.num)) {// 있을떄까지 뽑아내자
+					if (tmp.arriveT > next.time) {// 대기타는 경우
+						next.arriveT = tmp.arriveT + next.stairH;
+					} else {// 바로 갈수있는 경우
+						next.arriveT = next.time + next.stairH + 1;
+					}
+//					next.arriveT = tmp.arriveT + 1 + next.stairH;
+					q2.add(next);
+					break;
+				}
+			}
+		}
+//		System.out.println(curTime1 + " " + curTime2);
+		ans = Math.min(ans, Math.max(curTime1, curTime2));
 	}
 
 	static void pow(boolean[] flag, int idx) {
@@ -106,9 +173,7 @@ public class Solution_점심식사시간 {
 					list2.add(i);
 				}
 			}
-			System.out.println(list1);
-			System.out.println(list2);
-			System.out.println("-----------");
+			cal(list1, list2);
 			return;
 		}
 		flag[idx] = true;
@@ -117,38 +182,8 @@ public class Solution_점심식사시간 {
 		pow(flag, idx + 1);
 	}
 
-	static void bfs(People p, boolean[][] visit) {// 일단 만
-		Queue<People> p1 = new LinkedList<>();
-		p1.add(p);
-		int findS = 0;
-		while (findS < 2) {
-			People tmp = p1.poll();
-			for (int i = 0; i < 4; i++) {
-				int cx = tmp.x + dx[i];
-				int cy = tmp.y + dy[i];
-				if (cx < 0 || cy < 0 || cx >= N || cy >= N) {
-					continue;
-				}
-				if (visit[cx][cy]) {
-					continue;
-				}
-				if (map[cx][cy] < 2) {
-					visit[cx][cy] = true;
-					p1.add(new People(tmp.num, cx, cy, tmp.time + 1, 0));
-					visit[cx][cy] = false;
-				} else if (map[cx][cy] >= 2) {
-					visit[cx][cy] = true;
-					people.add(new People(tmp.num, cx, cy, tmp.time + 1, map[cx][cy]));
-					findS++;
-					continue;
-				}
-			}
-		}
-	}
-
 	static Queue<People> people;
-	static Queue<People>[] stair;// 계단별 사람도착시간
-//	static Queue<People> q;
+	static List<People>[] stair;// 계단별 사람도착시간
 	static int N, ans;
 	static int[][] map;
 	static int[] dx = new int[] { 0, 0, -1, 1 };
@@ -160,6 +195,7 @@ public class Solution_점심식사시간 {
 		int y;
 		int time;// 계단에 도착한 시간
 		int stairH;// 계단 높이
+		int arriveT;
 
 		public People(int num, int x, int y, int time, int stairH) {
 			super();
@@ -172,12 +208,16 @@ public class Solution_점심식사시간 {
 
 		@Override
 		public String toString() {
-			return "People [num=" + num + ", x=" + x + ", y=" + y + ", time=" + time + ", stairH=" + stairH + "]\n";
+			return "People [num=" + num + ", x=" + x + ", y=" + y + ", time=" + time + ", stairH=" + stairH + ", arriveT=" + arriveT + "]\n";
 		}
 
 		@Override
 		public int compareTo(People o) {
-			return this.time - o.time;
+			if (this.arriveT == o.arriveT) {
+
+				return this.time - o.time;
+			}
+			return this.arriveT - o.arriveT;
 		}
 	}
 }
