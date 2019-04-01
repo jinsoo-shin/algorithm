@@ -60,9 +60,61 @@ public class Solution_점심식사시간 {
 				System.out.println(stair[i]);
 				System.out.println("----");
 			}
-//			System.out.println(people);
+			List<Integer> list1 = new ArrayList<>();
+			List<Integer> list2 = new ArrayList<>();
+			for (int i = 0; i < 6; i++) {
+				list1.add(i);
+			}
+//			pow(new boolean[stair[0].size()], 0);
+			cal(list1, list2);
 			System.out.println("#" + tc + " " + ans);
 		}
+	}
+
+	static void cal(List<Integer> list1, List<Integer> list2) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             		Queue<People> q1 = new LinkedList<>();
+		while (q1.size() != 3) {
+			People tmp = stair[0].poll();
+			if (list1.contains(tmp.num)) {
+				q1.add(tmp);
+			}
+		}
+		System.out.println(q1);
+		int time1 = q1.peek().time;
+		while (!q1.isEmpty()) {
+			People tmp = q1.poll();
+			System.out.println(tmp);
+			if (tmp.time < time1) {
+				
+			} else {
+				time1 = time1 + tmp.time + 1;
+			}
+			System.out.println(time1);
+		}
+		Queue<People> q2 = new LinkedList<>();
+
+	}
+
+	static void pow(boolean[] flag, int idx) {
+		if (idx == flag.length) {
+			List<Integer> list1 = new ArrayList<>();
+			List<Integer> list2 = new ArrayList<>();
+			for (int i = 0; i < flag.length; i++) {
+				if (flag[i]) {
+					list1.add(i);
+				} else {
+					list2.add(i);
+				}
+			}
+			System.out.println(list1);
+			System.out.println(list2);
+			System.out.println("-----------");
+			return;
+		}
+		flag[idx] = true;
+		pow(flag, idx + 1);
+		flag[idx] = false;
+		pow(flag, idx + 1);
 	}
 
 	static void bfs(People p, boolean[][] visit) {// 일단 만
@@ -95,7 +147,7 @@ public class Solution_점심식사시간 {
 	}
 
 	static Queue<People> people;
-	static Queue<People>[] stair;// 계단1
+	static Queue<People>[] stair;// 계단별 사람도착시간
 //	static Queue<People> q;
 	static int N, ans;
 	static int[][] map;
