@@ -1,0 +1,18 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution_D1 {
+//	public class Solution {
+	public static void main(String[] args) throws Exception {
+//		System.setIn(new FileInputStream("res/input.txt"));
+//		InputStream input = Solution_기본.class.getResourceAsStream("jump.txt");
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		for (int tc = 1; tc <= T; tc++) {
+			int a = sc.nextInt();
+			for (int i = a; i >= 0; i--) {
+				System.out.print(i + " ");
+			}
+		}
+	}
+}
