@@ -1,17 +1,18 @@
 import java.io.*;
 import java.util.*;
 
-public class Main_가스관 {
+public class Main_가스관2 {
 //	public class Main {
 	public static void main(String[] args) throws Exception {
-//		String src = "3 7\r\n" + ".......\r\n" + ".M-.-Z.\r\n" + ".......";
-		String src = "3 5\r\n" + "..1-M\r\n" + "1-+..\r\n" + "Z.23.";
+		String src = "3 7\r\n" + ".......\r\n" + ".M-.-Z.\r\n" + ".......";
+//		String src = "3 5\r\n" + "..1-M\r\n" + "1-+..\r\n" + "Z.23.";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 //		br = new BufferedReader(new StringReader(src));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		map = new char[R][C];
+		ans = 0;
 		start = new int[2];
 		end = new int[2];
 		for (int i = 0; i < R; i++) {
@@ -39,95 +40,27 @@ public class Main_가스관 {
 			}
 //			System.out.println(Arrays.toString(map[i]));
 		}
-		ans = new int[3];
-		bfs(start[0], start[1]);
-
-		String str = null;
-		if (ans[2] <= 4) {
-			str = ans[2] + "";
-		} else if (ans[2] == 5) {
-			str = "|";
-		} else if (ans[2] == 6) {
-			str = "-";
-		} else if (ans[2] == 7) {
-			str = "7";
-		}
-		System.out.println((ans[0] + 1) + " " + (ans[1] + 1) + " " + str);
-	}
-
-	static int[] ans;
-
-	static void bfs(int startX, int startY) {
-
-		Queue<Node> q = new LinkedList<>();
-		boolean[][] visit = new boolean[R][C];
-		visit[startX][startY] = true;
-		q.add(new Node(startX, startY, false, 7));// 맨처음껀 사방을 탐색해보도록
-
-		while (!q.isEmpty()) {
-			Node tmp = q.poll();
-
-			int cur = tmp.dir;
-
-			if (cur == 0) {// 공백일때
-				if (tmp.change) {
-					continue;// 이미 바꾼적이 있다.
-				}
-				int dir = check(tmp.x, tmp.y);// 주변탐색해서 얻은것
-				// 여기에 for문으로 보내고 add할때 방향을 넣어서....
-				if (dir == 0) {// 갈수있는곳이 없어
-					continue;
-				}
-				String strD = pipe[dir];
-				for (int i = 0; i < 4; i++) {
-					if (strD.charAt(i) == '1') {// 보내보자
-						int cx = tmp.x + dx[i];
-						int cy = tmp.y + dy[i];
-						if (!isOk(cx, cy)) {
-							continue;
-						} // 범위 넘어감
-						if (visit[cx][cy]) {
-//							continue;// 방문한적이있다.
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				if (map[i][j] == '0') {
+					int tmp = check(i, j);
+					String ans = null;
+					if (tmp != 0) {
+						if (tmp <= 4) {
+							ans = tmp + "";
+						} else if (tmp == 5) {
+							ans = "|";
+						} else if (tmp == 6) {
+							ans = "-";
+						} else if (tmp == 7) {
+							ans = "7";
 						}
-						if (dir != 7) {
-							visit[cx][cy] = true;
-						}
-						ans[0] = tmp.x;
-						ans[1] = tmp.y;
-						ans[2] = dir;
-						return;
-						// 바꾼거 모양을 담아서 던져준다.
-					}
-				}
-
-			} else {// 보내기
-				String strD = pipe[cur];
-				for (int i = 0; i < 4; i++) {
-					if (strD.charAt(i) == '1') {// 연결되어있고
-						int cx = tmp.x + dx[i];
-						int cy = tmp.y + dy[i];
-						if (!isOk(cx, cy)) {
-							continue;
-						} // 범위 넘어감
-						if (visit[cx][cy]) {
-							continue;// 방문한적이있다.
-						}
-//						if (tmp.change) {
-//							if (isConnect(cx, cy, i)) {// 연결되어있어
-//								visit[cx][cy] = true;
-//								q.add(new Node(cx, cy, tmp.change, map[cx][cy] - '0', tmp.visit, tmp.cx, tmp.cy,
-//										tmp.cdir));// 바꾼거 모양을 담아서 던져준다.
-//							}
-//						} else {
-						visit[cx][cy] = true;
-						q.add(new Node(cx, cy, tmp.change, map[cx][cy] - '0'));// 바꾼거
-																				// 던져준다.
-//						}
+						System.out.println((i + 1) + " " + (j + 1) + " " + ans);
 					}
 				}
 			}
-
 		}
+//		check(1, 3);
 	}
 
 	// . 일때 주변연결되는거 검색용 String으로 리턴한다.
@@ -165,6 +98,9 @@ public class Main_가스관 {
 	static boolean isConnect(int cx, int cy, int dir) {
 		int beforeDir = (dir + 2) % 4;
 		int nextDir = map[cx][cy] - '0';
+//		if (nextDir > 7) {
+//			return t;
+//		}
 		for (int i = 0; i < 4; i++) {
 			if (pipe[nextDir].charAt(i) == '1') {
 				if (i == beforeDir) {
@@ -177,7 +113,7 @@ public class Main_가스관 {
 
 	static int[] start, end;
 	static char[][] map;
-	static int R, C, cnt;
+	static int ans, R, C, cnt;
 	static int[] dx = { 0, -1, 0, 1 };// 왼 위 오 아래
 	static int[] dy = { -1, 0, 1, 0 };
 	static String[] pipe = { "0000", "0011", "0110", "1100", "1001", "0101", "1010", "1111" };
@@ -187,6 +123,9 @@ public class Main_가스관 {
 		int y;
 		boolean change;
 		int dir;
+		int cx;
+		int cy;
+		int cdir;
 
 		public Node(int x, int y, boolean change, int dir) {
 			super();
@@ -194,7 +133,6 @@ public class Main_가스관 {
 			this.y = y;
 			this.change = change;
 			this.dir = dir;
-
 		}
 
 		@Override
