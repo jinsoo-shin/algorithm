@@ -50,7 +50,7 @@ public class Main_가스관 {
 		} else if (ans[2] == 6) {
 			str = "-";
 		} else if (ans[2] == 7) {
-			str = "7";
+			str = "+";
 		}
 		System.out.println((ans[0] + 1) + " " + (ans[1] + 1) + " " + str);
 	}
@@ -95,7 +95,7 @@ public class Main_가스관 {
 						ans[0] = tmp.x;
 						ans[1] = tmp.y;
 						ans[2] = dir;
-						return;
+						continue;
 						// 바꾼거 모양을 담아서 던져준다.
 					}
 				}
